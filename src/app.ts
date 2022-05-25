@@ -1,10 +1,9 @@
 import express, { json, Request, Response } from 'express';
+import apiRouter from './routes';
 
 const app = express();
 
 app.use(json());
-app.use('/api', (request: Request, response: Response) => {
-  return response.status(200).json('Ok');
-});
+app.use('/api/v1', apiRouter);
 
 export default app;
