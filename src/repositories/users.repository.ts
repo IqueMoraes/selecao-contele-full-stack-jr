@@ -1,4 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
+
+import { IValidate } from '../@types';
 import { Users } from '../entities/users.entity';
 import { IUsers, IdataUpdate, IusersRepo } from './usersInterfaces.respository';
 
@@ -25,7 +27,7 @@ class UsersRepository implements IusersRepo {
     order: { created_at: 'ASC' },
   });
 
-  updateUser = async (dataUser: IdataUpdate, update: IdataUpdate) => await this.ormRepo.update(dataUser, update);
+  updateUser = async (dataUser: IdataUpdate, update: IValidate) => await this.ormRepo.update(dataUser, update);
 
   deleteUser = async (dataUser: IdataUpdate) => await this.ormRepo.delete(dataUser);
 }

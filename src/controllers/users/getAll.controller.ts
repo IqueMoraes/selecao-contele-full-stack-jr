@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
 import { UsersRepository } from '../../repositories';
-import { ErrorHandler } from '../../services';
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -10,8 +9,8 @@ const getUsers = async (req: Request, res: Response) => {
       req.paginate.limit,
     );
 
-    const users = results.map((r) => {
-      const { password, ...user } = r;
+    const users = results.map((element) => {
+      const { password, ...user } = element;
       return user;
     });
 
@@ -25,8 +24,8 @@ const getAllUsers = async (_: Request, res: Response) => {
   try {
     const results = await new UsersRepository().findAllUsers();
 
-    const users = results.map((r) => {
-      const { password, ...user } = r;
+    const users = results.map((element) => {
+      const { password, ...user } = element;
       return user;
     });
 

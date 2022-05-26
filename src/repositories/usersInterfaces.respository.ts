@@ -1,4 +1,5 @@
 import { UpdateResult, DeleteResult } from 'typeorm';
+import { IValidate } from '../@types';
 
 interface IUsers {
     id?:string;
@@ -7,7 +8,7 @@ interface IUsers {
 }
 
 interface IdataUpdate {
-    [key:string]:string | number;
+    [key:string]:string;
 }
 
 interface IusersRepo {
@@ -16,7 +17,7 @@ interface IusersRepo {
     findUser:(id:string)=>Promise<IUsers>;
     findUsers:(page:number, limit:number)=>Promise<Array<IUsers>>;
     findAllUsers:()=>Promise<Array<IUsers>>;
-    updateUser:(dataUser:IdataUpdate, update:IdataUpdate)=>Promise<UpdateResult>;
+    updateUser:(dataUser:IdataUpdate, update:IValidate)=>Promise<UpdateResult>;
     deleteUser:(dataUser:IdataUpdate)=>Promise<DeleteResult>;
 }
 
