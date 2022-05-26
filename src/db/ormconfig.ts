@@ -19,9 +19,9 @@ const prodConfig = {
 
 const devConfig = {
   type: 'postgres',
-  host: 'localhost',
+  host: process.env.NODE_ENV === 'development' ? 'localhost' : process.env.DOCKER_PG,
   port: 5432,
-  username: process.env.POSTGRES_USERNAME,
+  username: process.env.NODE_ENV === 'development' ? process.env.POSTGRES_LOCAL_USER : process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   logging: false,
