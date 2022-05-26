@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { UsersRepository } from '../../repositories';
-import { ErrorHandler } from '../../services/error.service';
+import { ErrorHandler } from '../../services';
 
 const deleteUsers = async (req: Request, res: Response) => {
   try {

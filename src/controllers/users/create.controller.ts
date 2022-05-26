@@ -5,14 +5,16 @@ import { UsersRepository } from '../../repositories';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const user: Users = await new UsersRepository().saveUser(req.body as Users);
+    const user: Users = await new UsersRepository().saveUser(req.body);
 
-    const userToReturn = JSON.parse(JSON.stringify(user));
-    delete userToReturn.password;
+    const { password, ...userToReturn } = user;
 
     return res.status(201).json(userToReturn);
   } catch (err) {
-    return res.status(409).json({ error: 'Email Already in use!' });
+    if (err.detail && err.detail.includes('already exists')) {
+      return res.status(409).json({ error: 'Email already in use' });
+    }
+    return res.status(409).json({ error: err.message });
   }
 };
 

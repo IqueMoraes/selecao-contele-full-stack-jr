@@ -9,16 +9,19 @@ interface IPaginate {
   page: number;
   limit: number;
 }
-
+interface IValidate {
+  email?: string;
+  password?: string;
+}
 declare global {
   namespace Express {
     interface Request {
       user: Users;
-      validated: Users;
+      validated: IValidate;
       paginate: IPaginate;
       navlinks: INavLink;
     }
   }
 }
 
-export { INavLink, IPaginate };
+export { INavLink, IPaginate, IValidate };

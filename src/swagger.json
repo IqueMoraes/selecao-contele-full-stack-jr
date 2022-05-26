@@ -1,0 +1,485 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API para seleção de vaga Full Stack Jr",
+    "description": "API com CRUD simples e verificações de dados simples. Desenvolvido em NodeJs com Express e TypeORM para conexão com banco de dados.",
+    "contact": {
+      "name": "API Support",
+      "email": "iquedemoraes@gmail.com"
+    },
+    "version": "1.0.1"
+  },
+
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "development"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "description": "Essa rota é responsavel por cadastrar um novo usuário.",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserRegister" },
+              "examples": {
+                "UserRegister": {
+                  "$ref": "#/components/examples/UserRegister"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "User": {
+                    "$ref": "#/components/examples/User"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "User": {
+                    "$ref": "#/components/examples/Conflict"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Missing email key": {
+                    "value": {
+                      "error": "There is missing key 'email'"
+                    }
+                  },
+                  "Missing password key": {
+                    "value": {
+                      "error": "There is missing key 'password'"
+                    }
+                  },
+                  "Invalid email format without '@' or '.com'": {
+                    "value": {
+                      "error": "Invalid email"
+                    }
+                  },
+                  "Invalid password format, not a string type or string length less than 6 charecters": {
+                    "value": {
+                      "error": "Password must be a string and have at least 6 characters"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": { "type": "integer", "default": 0 },
+            "description": "The number of a starting page to show users from database."
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": { "type": "integer", "default": 15 },
+            "description": "The limit number of users to show at response list."
+          }
+        ],
+        "description": "Essa rota é responsável por entregar todos os usuários sob paginação.",
+        "tags": ["Users"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/AllUsers"
+                },
+                "examples": {
+                  "Users": {
+                    "value": {
+                      "response": [
+                        {
+                          "id": "2fe57e7c-6341-4764-bd77-bf8b55e7b56e",
+                          "email": "marilia@mail.com",
+                          "created_at": "2022-05-26T01:08:24.564Z",
+                          "updated_at": "2022-05-26T01:08:24.564Z"
+                        },
+                        {
+                          "id": "1c988456-4cfe-4ccd-bc63-4f27f41c80cb",
+                          "email": "alfredo@mail.com",
+                          "created_at": "2022-05-26T01:18:00.288Z",
+                          "updated_at": "2022-05-26T01:18:00.288Z"
+                        },
+                        {
+                          "id": "edd82c1c-d8f7-4587-8b4f-138c2e309a04",
+                          "email": "alfreda@mail.com",
+                          "created_at": "2022-05-26T01:50:53.934Z",
+                          "updated_at": "2022-05-26T01:50:53.934Z"
+                        },
+                        {
+                          "id": "5239cc5e-ec52-4e1b-a87e-af58335d7b94",
+                          "email": "juliamedeiros@mail.com",
+                          "created_at": "2022-05-26T01:51:38.930Z",
+                          "updated_at": "2022-05-26T02:25:43.664Z"
+                        },
+                        {
+                          "id": "0f5ed6d8-7df5-439b-95fd-2614631958d3",
+                          "email": "alberto@mail.com",
+                          "created_at": "2022-05-26T01:52:44.041Z",
+                          "updated_at": "2022-05-26T01:52:44.041Z"
+                        },
+                        {
+                          "id": "abdb77b9-f2f8-47da-9bc2-b695f8a3d187",
+                          "email": "flavio@mail.com",
+                          "created_at": "2022-05-26T02:24:20.852Z",
+                          "updated_at": "2022-05-26T02:24:20.852Z"
+                        }
+                      ],
+                      "navigate_links": {
+                        "next_page": "http://localhost:3000/api/v1/users?page=2&limit=6",
+                        "previous_page": "http://localhost:3000/api/v1/users?page=1&limit=6"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Essa rota é responsável por apagar todos os usuário do banco de dados",
+        "tags": ["Users"],
+        "responses": {
+          "204": {
+            "description": "OK, NO CONTENT"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "description": "Essa rota é responsável por retonar um único usuário identificado pelo ID na rota da requisição.",
+        "tags": ["User by ID"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "User": {
+                    "value": {
+                      "id": "5239cc5e-ec52-4e1b-a87e-af58335d7b94",
+                      "email": "iquemail@mail.com",
+                      "created_at": "2022-05-26T01:51:38.930Z",
+                      "updated_at": "2022-05-26T01:51:38.930Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "NotFound": {
+                    "value": {
+                      "error": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Essa rota é responsável por alterar email, senha ou os dois do usuário identificado pelo ID na rota de requisição",
+        "tags": ["User by ID"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserUpdate" },
+              "examples": {
+                "UserRegister": {
+                  "$ref": "#/components/examples/UserUpdate"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "UserUpdated": {
+                    "value": {
+                      "id": "5239cc5e-ec52-4e1b-a87e-af58335d7b94",
+                      "email": "iquemoraes@mail.com",
+                      "created_at": "2022-05-26T01:51:38.930Z",
+                      "updated_at": "2022-05-27T08:34:25.140Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "NotFound": {
+                    "value": {
+                      "error": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Essa rota é responsável por apagar usuário do banco de dados",
+        "tags": ["User by ID"],
+        "responses": {
+          "204": {
+            "description": "OK, NO CONTENT"
+          },
+          "404": {
+            "description": "NOT FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "NotFound": {
+                    "value": {
+                      "error": "User not found"
+                    }
+                  } 
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+      "UserRegister": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "AllUsers": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+                        
+          },
+          "navigate_links": {
+            "type": "object",
+            "properties": {
+              "next_page": {
+                "type": "string"
+              },
+              "previous_page": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "UserRegister": {
+        "value": {
+          "email": "iquemail@mail.com",
+          "password": "senha1234"
+        }
+      },
+      "User": {
+        "value": {
+          "id": "5239cc5e-ec52-4e1b-a87e-af58335d7b94",
+          "email": "iquemail@mail.com",
+          "created_at": "2022-05-26T01:51:38.930Z",
+          "updated_at": "2022-05-26T01:51:38.930Z"
+        }
+      },
+      "UserUpdate": {
+        "value": {
+          "email": "iquemoraes@mail.com"
+        }
+      },
+      "UserUpdated": {
+        "value": {
+          "id": "5239cc5e-ec52-4e1b-a87e-af58335d7b94",
+          "email": "iquemoraes@mail.com",
+          "created_at": "2022-05-26T01:51:38.930Z",
+          "updated_at": "2022-05-27T08:34:25.140Z"
+        }
+      },
+      "Users": {
+        "value": {
+          "response": [
+            {
+              "id": "2fe57e7c-6341-4764-bd77-bf8b55e7b56e",
+              "email": "marili@mail.com",
+              "created_at": "2022-05-26T01:08:24.564Z",
+              "updated_at": "2022-05-26T01:08:24.564Z"
+            },
+            {
+              "id": "1c988456-4cfe-4ccd-bc63-4f27f41c80cb",
+              "email": "alfredo@mail.com",
+              "created_at": "2022-05-26T01:18:00.288Z",
+              "updated_at": "2022-05-26T01:18:00.288Z"
+            },
+            {
+              "id": "edd82c1c-d8f7-4587-8b4f-138c2e309a04",
+              "email": "alfreda@mail.com",
+              "created_at": "2022-05-26T01:50:53.934Z",
+              "updated_at": "2022-05-26T01:50:53.934Z"
+            },
+            {
+              "id": "5239cc5e-ec52-4e1b-a87e-af58335d7b94",
+              "email": "juliamedeiros@mail.com",
+              "created_at": "2022-05-26T01:51:38.930Z",
+              "updated_at": "2022-05-26T02:25:43.664Z"
+            },
+            {
+              "id": "0f5ed6d8-7df5-439b-95fd-2614631958d3",
+              "email": "alfreta@mail.com",
+              "created_at": "2022-05-26T01:52:44.041Z",
+              "updated_at": "2022-05-26T01:52:44.041Z"
+            },
+            {
+              "id": "abdb77b9-f2f8-47da-9bc2-b695f8a3d187",
+              "email": "alfrega@mail.com",
+              "created_at": "2022-05-26T02:24:20.852Z",
+              "updated_at": "2022-05-26T02:24:20.852Z"
+            }
+          ],
+          "navigate_links": {
+            "next_page": "http://localhost:3000/api/v1/users?page=2&limit=15",
+            "previous_page": "http://localhost:3000/api/v1/users?page=1&limit=15"
+          }
+        }
+      },
+      "NotFound": {
+        "value": {
+          "error": "User not found"
+        }
+      },
+      "Conflict": {
+        "value": {
+          "error": "Email already in use"
+        }
+      }
+    }
+  }
+}
