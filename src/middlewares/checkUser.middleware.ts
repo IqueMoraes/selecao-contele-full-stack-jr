@@ -13,7 +13,7 @@ const checkUser = async (req: Request, res: Response, next: NextFunction) => {
     req.user = user;
     return next();
   } catch (err) {
-    return res.status(err.statusCode).json({ error: err.message });
+    return err.driverError?.file === 'uuid.c' ? res.status(404).json({ error: 'Invalid Id at request path. It must has UUID format.' }) : res.status(err.statusCode).json({ error: err.message });
   }
 };
 

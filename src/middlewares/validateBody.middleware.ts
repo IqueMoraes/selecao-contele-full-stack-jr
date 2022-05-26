@@ -15,17 +15,15 @@ const validateBody = (req: Request, res: Response, next: NextFunction) => {
     checkPassword(password);
 
     req.body.password = hashSync(password, 10);
-    req.validated = req.body;
     return next();
   }
 
   if (email) {
     checkEmail(email);
-    req.validated.email = email;
   }
   if (password) {
     checkPassword(password);
-    req.validated.password = hashSync(password, 10);
+    req.body.password = hashSync(password, 10);
   }
   return next();
 };

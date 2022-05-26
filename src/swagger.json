@@ -233,6 +233,24 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid User_id": {
+                    "value": {
+                      "error": "Invalid Id at request path. It must has UUID format."
+                    }
+                  } 
+                }
+              }
+            }
           }
         }
       },
@@ -290,6 +308,24 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid User_id": {
+                    "value": {
+                      "error": "Invalid Id at request path. It must has UUID format."
+                    }
+                  } 
+                }
+              }
+            }
           }
         }
       },
@@ -312,6 +348,24 @@
                   "NotFound": {
                     "value": {
                       "error": "User not found"
+                    }
+                  } 
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Error"
+                },
+                "examples": {
+                  "Invalid User_id": {
+                    "value": {
+                      "error": "Invalid Id at request path. It must has UUID format."
                     }
                   } 
                 }
