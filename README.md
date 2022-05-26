@@ -3,6 +3,8 @@
 Aplicação desenvolvida para cadastro e manutenção de usuários com dados de email e senha.
 Os dados são validados e a senha é criptografada e protegida nos retornos.
 
+O código foi desenvolvido em TypeScript com o framework express usando TypeORM para conectar com o banco de dados Postgres.
+
 Para acessar as estruturas e exemplos de requisição, com a aplicação rodando basta acessar o endereço http://localhost:3000/api/documentation .
 
 
