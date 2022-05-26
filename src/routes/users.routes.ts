@@ -1,17 +1,27 @@
 import { Router } from 'express';
 
+import {
+  createUser,
+  deleteUser,
+  deleteUsers,
+  getOneUser,
+  getUsers,
+  updateUser,
+} from '../controllers';
+import { paginateResult } from '../middlewares';
+
 const routesUsers = Router();
 
-routesUsers.get('', (_, res) => res.status(200).send('OK'));
+routesUsers.get('', paginateResult, getUsers);
 
-routesUsers.get('/:user_id', (_, res) => res.status(200).send('OK'));
+routesUsers.get('/:user_id', getOneUser);
 
-routesUsers.post('', (_, res) => res.status(200).send('OK'));
+routesUsers.post('', createUser);
 
-routesUsers.put('/:user_id', (_, res) => res.status(200).send('OK'));
+routesUsers.put('/:user_id', updateUser);
 
-routesUsers.delete('', (_, res) => res.status(200).send('OK'));
+routesUsers.delete('', deleteUsers);
 
-routesUsers.delete('/:user_id', (_, res) => res.status(200).send('OK'));
+routesUsers.delete('/:user_id', deleteUser);
 
 export default routesUsers;
