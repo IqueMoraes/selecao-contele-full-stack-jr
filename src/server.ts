@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import { createConnection } from 'typeorm';
 import app from './app';
 
-import dbConfig from './db/ormconfigs';
+import dbConfig from './db/ormconfig';
 
 dotenv.config();
 
