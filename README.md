@@ -3,7 +3,10 @@
 Aplicação desenvolvida para cadastro e manutenção de usuários com dados de email e senha.
 Os dados são validados e a senha é criptografada e protegida nos retornos.
 
-## Rodando localmente modo desenvolvimento
+Para acessar as estruturas e exemplos de requisição, com a aplicação rodando basta acessar o endereço http://localhost:3000/api/documentation .
+
+
+## Rodando localmente em modo de desenvolvimento
 
 Para rodar a aplicação localmente é preciso configurar no arquivo .env a variável "NODE_ENV=development".
 
