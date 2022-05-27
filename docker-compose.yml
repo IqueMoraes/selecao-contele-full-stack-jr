@@ -5,20 +5,29 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./src:/src/
+    - ./src:/src/
     expose:
-      - 3000
+    - 3000
     ports:
-      - 3000:3000
+    - 3000:3000
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=cotele
+    - NODE_ENV=docker
+    - DOCKER_PG=pg
     depends_on:
-      - pg
+    - pg
     command: bash -c 'yarn typeorm migration:run && yarn dev'
   pg:
     container_name: postgresContele
-    image: postgres
-    env_file:
-      - .env
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=cotele
     expose:
-      - 5432
+    - 5432
     ports:
-      - 5432:5432
+    - 5432:5432

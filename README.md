@@ -28,11 +28,10 @@ Caso queira mudar a porta de conexão, basta alterá-la em .env na variável POR
 
 ## Rodando com Docker
 
-Para rodar a aplicação com docker localmente é preciso configurar no arquivo .env a variável "NODE_ENV" com o valor "docker".
-
 Rodar o comando "sudo docker-compose up", dentro do diretório que se encontra o arquivo "docker-compose.yml".
 
-Para rodar no docker, é sugerido que mantenha a variável PORT com o valor '3000', para que não tenha incompatibilidade com a porta configurada no container do docker.
+*Lembre-se de checar se as variáveis do arquivo "docker-compose.yml" estão compatíveis com suas configurações.
+
 
 
 
